@@ -49,7 +49,7 @@ const Sidebar = () => {
     const handler = () => fetchClassrooms();
     window.addEventListener('classroomCreated', handler);
     return () => window.removeEventListener('classroomCreated', handler);
-  }, []);
+  }, [location]);
   const [showModal, setShowModal] = useState(false);
   const [newClassroom, setNewClassroom] = useState({ name: '', subject: '' });
   const [creating, setCreating] = useState(false);

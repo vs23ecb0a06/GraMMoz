@@ -165,7 +165,7 @@ const AnnouncementPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#181C23]">
       <Sidebar />
       <div className="ml-64 flex flex-col">
         <Header />
@@ -176,7 +176,7 @@ const AnnouncementPage = () => {
             </h1>
             {isCreator && (
               <button
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition"
                 onClick={() => setShowAddModal(true)}
               >
                 Add Announcement
@@ -184,8 +184,8 @@ const AnnouncementPage = () => {
             )}
           </div>
           <div className="max-w-6xl mx-auto">
-            <div className="bg-white dark:bg-[#23272f] rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800">
-              <div className="grid grid-cols-12 items-center px-6 py-4 border-b border-gray-100 dark:border-gray-800 text-xs font-semibold text-gray-500">
+            <div className="bg-white dark:bg-gradient-to-br dark:from-[#23272f] dark:to-[#181C23] rounded-2xl shadow-lg border border-gray-200 dark:border-[#23272f]">
+              <div className="grid grid-cols-12 items-center px-6 py-4 border-b border-gray-100 dark:border-[#23272f] text-xs font-semibold text-gray-500">
                 <div className="col-span-5">Announcement</div>
                 <div className="col-span-3">Publish Date</div>
                 <div className="col-span-3">Status</div>
@@ -199,7 +199,7 @@ const AnnouncementPage = () => {
                 announcements.map((a, idx) => (
                   <div
                     key={idx}
-                    className={`grid grid-cols-12 items-center px-6 py-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#23272f] transition cursor-pointer ${expandedIdx === idx ? 'bg-gray-100 dark:bg-[#23272f]' : ''}`}
+                    className={`grid grid-cols-12 items-center px-6 py-4 border-b border-gray-100 dark:border-[#23272f] hover:bg-gray-50 dark:hover:bg-[#23272f] transition cursor-pointer ${expandedIdx === idx ? 'bg-gray-100 dark:bg-[#23272f]' : ''}`}
                     onClick={() => setExpandedIdx(expandedIdx === idx ? null : idx)}
                   >
                     <div className="col-span-5 flex items-center gap-3">
@@ -239,7 +239,7 @@ const AnnouncementPage = () => {
                       </button>
                     </div>
                     {expandedIdx === idx && (
-                      <div className="col-span-12 mt-4 p-4 rounded-lg bg-white dark:bg-[#23272f] shadow">
+                      <div className="col-span-12 mt-4 p-4 rounded-lg bg-white dark:bg-gradient-to-br dark:from-[#23272f] dark:to-[#181C23] shadow-lg border border-gray-200 dark:border-[#23272f]">
                         <div className="mb-2 text-gray-700 dark:text-gray-300">
                           {a.text}
                         </div>
@@ -257,16 +257,19 @@ const AnnouncementPage = () => {
                     )}
                   </div>
                 ))
-              )}
+            )  }
+            
             </div>
             {/* Pagination Controls */}
             <div className="flex items-center justify-between mt-6 px-2">
-              <button className="px-4 py-2 rounded-lg border text-gray-600 bg-white dark:bg-[#23272f] hover:bg-gray-100 dark:hover:bg-gray-700">
+              <button className="flex items-center gap-2 px-5 py-2 rounded-xl font-semibold shadow bg-gray-200 dark:bg-[#23272f] text-gray-700 dark:text-gray-200 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-700 transition disabled:opacity-50" disabled>
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
                 Previous Page
               </button>
               <span className="text-sm text-gray-500">Page 1 of 1</span>
-              <button className="px-4 py-2 rounded-lg border text-gray-600 bg-white dark:bg-[#23272f] hover:bg-gray-100 dark:hover:bg-gray-700">
+              <button className="flex items-center gap-2 px-5 py-2 rounded-xl font-semibold shadow bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50" disabled>
                 Next Page
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
               </button>
             </div>
           </div>

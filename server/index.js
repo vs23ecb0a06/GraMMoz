@@ -62,6 +62,15 @@ const chatMessageSchema = new mongoose.Schema({
 });
 const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema);
 
+const callSchema = new mongoose.Schema({
+  classroomId: String,
+  userId: String,
+  title: String,
+  scheduledAt: Date,
+  createdAt: { type: Date, default: Date.now }
+});
+const Call = mongoose.model('Call', callSchema);
+
 // API routes
 app.get('/api/menu', async (req, res) => {
   const menu = await Menu.find();
@@ -258,6 +267,23 @@ app.post('/api/chat', async (req, res) => {
   const message = new ChatMessage({ userId, userName, text });
   await message.save();
   res.json(message);
+});
+
+// Get all calls for a classroom
+app.get('/api/classrooms/:id/calls', async (req, res) => {
+  const classroomId = req.params.id;
+  const calls = await Call.find({ classroomId }).sort({ scheduledAt: 1 });
+  res.json(calls);
+});
+
+// Create a new call for a classroom
+app.post('/api/classrooms/:id/calls', async (req, res) => {
+  const classroomId = req.params.id;
+  const { userId, title, scheduledAt } = req.body;
+  if (!userId || !title || !scheduledAt) return res.status(400).json({ message: 'Missing fields' });
+  const call = new Call({ classroomId, userId, title, scheduledAt });
+  await call.save();
+  res.json(call);
 });
 
 app.listen(4000, () => {

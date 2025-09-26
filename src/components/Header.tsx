@@ -40,7 +40,7 @@ const Header = () => {
   const handleSignOut = () => {
     localStorage.removeItem("userId");
     // If you store a token, remove it here as well
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   return (

@@ -54,6 +54,14 @@ const announcementSchema = new mongoose.Schema({
 });
 const Announcement = mongoose.model('Announcement', announcementSchema);
 
+const chatMessageSchema = new mongoose.Schema({
+  userId: String,
+  userName: String,
+  text: String,
+  createdAt: { type: Date, default: Date.now }
+});
+const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema);
+
 // API routes
 app.get('/api/menu', async (req, res) => {
   const menu = await Menu.find();
@@ -235,6 +243,21 @@ app.post('/api/classrooms/join/:inviteCode', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Error joining classroom', error: err.message });
   }
+});
+
+// Get all chat messages
+app.get('/api/chat', async (req, res) => {
+  const messages = await ChatMessage.find().sort({ createdAt: 1 });
+  res.json(messages);
+});
+
+// Post a new chat message
+app.post('/api/chat', async (req, res) => {
+  const { userId, userName, text } = req.body;
+  if (!userId || !text) return res.status(400).json({ message: 'Missing userId or text' });
+  const message = new ChatMessage({ userId, userName, text });
+  await message.save();
+  res.json(message);
 });
 
 app.listen(4000, () => {

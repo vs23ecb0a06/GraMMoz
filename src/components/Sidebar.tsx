@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ChatPage from "@/pages/ChatPage";
 
 const defaultMainMenu = [
   { icon: "Home", label: "Home", href: "/dashboard" },
@@ -171,14 +172,17 @@ const Sidebar = () => {
           {(mainMenu.length ? mainMenu : defaultMainMenu).map((item) => {
             const Icon = iconMap[item.icon] || Home;
             return (
-              <Link key={item.href} to={item.href}>
+              <Link key={item.href} to={item.href} onClick={() => setExpandedClassroom(null)}>
                 <Button
                   variant="ghost"
                   className={cn(
                     "w-full justify-start px-3 py-2 h-auto text-sm text-gray-900 dark:text-white hover:bg-sidebar-accent hover:text-sidebar-accent-foreground dark:hover:bg-[#23272f] dark:hover:text-white",
                     location.pathname === item.href && "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                   )}
-                  onClick={() => setExpandedClassroom(null)}
+                  onClick={() => {
+                    setExpandedClassroom(null);
+                    if (item.href === '/chat') navigate('/chat');
+                  }}
                 >
                   <Icon className="mr-3 h-4 w-4" />
                   <span className="flex-1 text-left">{item.label}</span>
@@ -322,4 +326,8 @@ export default Sidebar;
    .sidebar li {
      @apply flex items-center gap-3 px-4 py-2 rounded-lg text-gray-900 font-bold hover:bg-gray-100 hover:text-blue-600 transition;
    }
+*/
+
+/* In your main App router (not shown here), make sure to add:
+   <Route path="/chat" element={<ChatPage />} />
 */
